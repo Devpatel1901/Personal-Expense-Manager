@@ -11,6 +11,7 @@ export default class View_Expense extends Component {
           filter: "none",
           isLoaded: false,
           update: false,
+          Totalsum: 0,
           data: {
             _id: '0',
             DateOfExpense: '',
@@ -27,23 +28,32 @@ export default class View_Expense extends Component {
           .then((result)=> {
                 if (this.state.filter === "none" || this.state.filter === "all")
                 {
+                    var sum = 0;
+                    for (var i = 0 ; i < result.length ; i++)
+                    {
+                        sum += result[i].ItemCost;
+                    }
                     this.setState({
                         isLoaded: true,
-                        items: result
+                        items: result,
+                        Totalsum: sum
                     });
                 }else{
                     var arr = [];
-                    for (var i = 0 ; i < result.length ; i++)
+                    var sum1 = 0;
+                    for (var j = 0 ; j < result.length ; j++)
                     {
-                        if (result[i].ItemCategory === this.state.filter)
+                        if (result[j].ItemCategory === this.state.filter)
                         {
-                            arr.push(result[i]);
+                            sum1 += result[j].ItemCost;
+                            arr.push(result[j]);
                         }
                     }
                     this.setState({
                         isLoaded: true,
                         items: arr,
-                        filter: this.state.filter
+                        filter: this.state.filter,
+                        Totalsum: sum1
                     })
                 }
             });
@@ -139,6 +149,7 @@ export default class View_Expense extends Component {
                 console.error(err);
             });
     }
+    
     render() {
         return (
             <div className="container" style={{fontFamily: "'Cormorant Garamond', serif",marginTop: "8vh"}}>
@@ -167,7 +178,8 @@ export default class View_Expense extends Component {
                 </div>
                 </div>
                 <div className="my-5" id="expense_records" style={{height: "37vh",position: "relative"}}>
-                    <div style={{backgroundColor: "#ff4040" , fontSize: "20px" , color: "white" ,   padding: "0px 10px"}}>
+                    <h4 className="text-center">{`Total Expense for selected filtered category is: ${this.state.Totalsum}`}</h4>
+                    <div style={{backgroundColor: "#ff4040" , fontSize: "20px" , color: "white" ,   padding: "0px 10px",marginTop: "15px"}}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" className="bi bi-arrows-angle-expand" viewBox="0 0 16 16">
                         <path fillRule="evenodd" d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707z"/>
                     </svg> History of Expenses
@@ -216,7 +228,7 @@ export default class View_Expense extends Component {
                         <div className="modal-dialog">
                             <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <h5 className="modal-title" id="exampleModalLabel">Expense Update Form</h5>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">

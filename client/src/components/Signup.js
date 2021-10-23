@@ -61,21 +61,21 @@ export default function Signup() {
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label for="Name" className="form-label">Name</label>
-                    <input type="text" name="Name" className="form-control" onChange={onChangeName} id="Name" aria-describedby="emailHelp"/>
+                    <input type="text" name="Name" className="form-control" onChange={onChangeName} id="Name" aria-describedby="emailHelp" required/>
                 </div>
                 <div className="mb-3">
                     <label for="Email" className="form-label">Email address</label>
-                    <input type="email" onChange={onChangeEmail} name="Email" className="form-control" id="Email" aria-describedby="emailHelp"/>
+                    <input type="email" onChange={onChangeEmail} name="Email" className="form-control" id="Email" aria-describedby="emailHelp" required/>
                     <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                 </div>
                 <div className="mb-3">
                     <label for="Password" className="form-label">Password</label>
-                    <input type="password" name="Password" onChange={onChangePassword} className="form-control" id="Password"/>
+                    <input type="password" name="Password" onChange={onChangePassword} className="form-control" id="Password" required/>
                 </div>
                 <div className="mb-3">
                     <label for="currency" className="form-label">Choose your currency: </label>
 
-                    <select name="currency" id="currency" value={selectedValue.value} onChange={onDropdownChange}>
+                    <select name="currency" id="currency" value={selectedValue.value} onChange={onDropdownChange} required>
                         <option value="none" selected hidden>--Please Select an Option--</option>
                         {data.map((e)=>{
                             return (<option key={e.name} value={e.name}>{e.name}</option>)

@@ -3,6 +3,7 @@ const connectToMongo = require('./db');
 const Expense = require('./models/Expense');
 const Income = require('./models/Income');
 const User = require('./models/User');
+const Budget = require('./models/Budget');
 const PORT = process.env.PORT || 3001;
 const cors = require('cors')
 
@@ -225,7 +226,7 @@ app.post("/delete/expense",(req,res)=>{
         res.send({message: "Record Succeessfully deleted"});
       }
     })
-})
+});
 
 app.post("/delete/income",(req,res)=>{
   Income.findByIdAndDelete({_id:req.body.ID},function (err){
@@ -237,7 +238,7 @@ app.post("/delete/income",(req,res)=>{
       res.send({message: "Record Succeessfully deleted"});
     }
   })
-})
+});
 
 app.post('/update/expense', function(req, res) {
   Expense.findByIdAndUpdate(req.body._id,{
@@ -257,12 +258,6 @@ app.post('/update/expense', function(req, res) {
 });
 
 app.post('/update/income', function(req, res) {
-  // console.log(req.body.DateOfExpense);
-  // console.log(req.body.ItemName);
-  // console.log(req.body.ItemCost);
-  // console.log(req.body.ItemCategory);
-  // console.log(req.body.ExpenseDescription);
-  // console.log(req.body._id);
   Income.findByIdAndUpdate(req.body._id,{
     DateOfIncome: req.body.DateOfIncome,
     Name: req.body.Name,
@@ -317,6 +312,55 @@ app.post('/get/userdetails',function(req,res){
       res.send(docs);
     }
   })
+});
+
+app.post("/add/budget",function(req,res){
+  Budget.create({
+    ID: 1,
+    BudgetAmount: req.body.BudgetAmount,
+    Category: req.body.Category
+  })
+  .then(user=>res.json(user))
+  .catch(err => console.log(err))
+});
+
+app.get('/get/budget', (req,res) => {
+  var id = '1';
+  Budget.find({ID: id}, function (err, docs) {
+    if (err){
+        console.log(err);
+        res.json({message: "Do not able to fetch data"});
+    }
+    else{
+        res.send(docs);
+    }
+});
+});
+
+app.post("/delete/budget",(req,res)=>{
+  Budget.findByIdAndDelete({_id:req.body.ID},function (err){
+    if(err){
+      res.send(err);
+    }
+    else
+    {
+      res.send({message: "Record Succeessfully deleted"});
+    }
+  })
+});
+
+app.post('/update/budget', function(req, res) {
+  Budget.findByIdAndUpdate(req.body._id,{
+    BudgetAmount: req.body.BudgetAmount,
+    Category: req.body.Category,},function(err,docs){
+      if (err){
+        console.log(err)
+      }
+      else
+      {
+        res.send(docs);
+      }
+    })
 });
 
 app.listen(PORT, () => {

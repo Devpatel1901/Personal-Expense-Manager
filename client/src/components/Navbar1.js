@@ -9,6 +9,7 @@ import ViewIncome from "./View_Income";
 import data from "./data/Currency.json";
 import ExpenseReport from "./ExpenseReport";
 import IncomeReport from "./IncomeReport";
+import Managebudget from "./Manage_budget";
 
 
 export default class Navbar1 extends Component {
@@ -187,7 +188,7 @@ export default class Navbar1 extends Component {
                     </li>
                   </ul>
                 </li>
-                {/* <li className="nav-item">
+                <li className="nav-item">
                   <Link
                     className="nav-link"
                     aria-current="page"
@@ -205,7 +206,7 @@ export default class Navbar1 extends Component {
                     </svg>{" "}
                     Manage Budget
                   </Link>
-                </li> */}
+                </li>
               </ul>
             </div>
           </div>
@@ -234,9 +235,9 @@ export default class Navbar1 extends Component {
               <Route path="/home/chart_income">
                 <IncomeReport/>
               </Route>
-              {/* <Route path="/home/manage_budget">
+              <Route path="/home/manage_budget">
                 <Managebudget currency_symbol={this.state.currency}/>
-              </Route> */}
+              </Route>
         </Switch>
       </div>
     );

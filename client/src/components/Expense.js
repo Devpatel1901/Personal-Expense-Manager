@@ -9,13 +9,21 @@ export default class Expense extends Component {
             ItemName: '',
             ItemCost: 0,
             ItemCategory: 'none',
-            ExpenseDescription: ''
+            ExpenseDescription: '',
+            expense_data: null,
+            budget_data: [],
         }
     }
-
-    handleAddExpense = () => {
-        this.props.showAlert("Expense Added Successfully","success");
-    }  
+    
+    componentDidMount()
+    {
+        fetch("/expense/category")
+        .then((res)=>res.json())
+        .then((data)=>{this.setState({...this.state,expense_data: data.category})})
+        fetch("/get/budget")
+        .then((res)=>res.json())
+        .then((data)=>{this.setState({...this.state,budget_data: data})})
+    }
     
     onChange = (e) => {
         /*
@@ -26,10 +34,69 @@ export default class Expense extends Component {
           this.setState({ [e.target.name]: e.target.value });
     }
 
+    
+
+    checkbudget = () => {
+        var cost = this.state.ItemCost;
+        var total_expense_category_wise;
+        var budget;
+        var res = true;
+        for (var i = 1 ; i < this.state.expense_data.length ; i++)
+        {
+            var arr = this.state.expense_data[i];
+            if (arr[0] === this.state.ItemCategory)
+            {
+                total_expense_category_wise = arr[1];
+                break;
+            }
+        }
+        budget = this.state.budget_data.map((data)=>{
+            var amount;
+            if (data.Category === this.state.ItemCategory)
+            {
+                console.log()
+                amount = data.BudgetAmount;
+                return amount;
+            }
+            return amount;
+        })
+        var AvailableBalance = budget - total_expense_category_wise;
+        if (AvailableBalance <= 0)
+        {
+            res = false;
+        }
+        else if (AvailableBalance > 0)
+        {
+            if (cost <= AvailableBalance)
+            {
+                res = true;
+            }
+            else
+            {
+                res = false;
+            }
+        }
+        return res;
+    }
+
+    myalert = () => {
+        var res = false;
+        if (this.checkbudget())
+        {
+            res = true;
+        }
+        else{
+            res = false;
+        }
+        return res;
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.post('http://localhost:3001/create/expense', this.state)
+        if (this.myalert())
+        {
+            axios.post('http://localhost:3001/create/expense', this.state)
             .then((result)=>{
                 this.props.showAlert("Expense Added Successfully","success");
             })
@@ -37,6 +104,12 @@ export default class Expense extends Component {
                 console.error(err);
                 this.props.showAlert("Expense is not Added Successfully","danger");
             });
+        }
+        else
+        {
+            alert("Your Entered Item Cost is execeeded from your budget that you have set.Please Reset Your Budget before inserting a new Expense");
+            return
+        }
     }
 
     
@@ -79,7 +152,7 @@ export default class Expense extends Component {
                     </div>
                     <div className="mb-3">
                         <label htmlFor="disabledSelect" className="form-label fw-bold">Item Category</label>
-                        <select id="disabledSelect" name="ItemCategory" value={ItemCategory} onChange={this.onChange} placeholder="--Select an Option--" className="form-select">
+                        <select id="disabledSelect" name="ItemCategory" value={ItemCategory} onChange={this.onChange} placeholder="--Select an Option--" className="form-select" required>
                             <option value="none" disabled>--Please Select an Option--</option>
                             <option value="Food">Food</option>
                             <option value="Transportation">Transportation</option>
@@ -94,7 +167,7 @@ export default class Expense extends Component {
                         <textarea className="form-control" name="ExpenseDescription" onChange={this.onChange} value={ExpenseDescription} id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
                     <br />
-                    <button type="submit" className="btn btn-primary fw-bold" onClick={this.handleAddExpense}>
+                    <button type="submit" className="btn btn-primary fw-bold">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-plus-lg" viewBox="0 0 16 16">
                     <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
                     </svg> Add Expense</button>

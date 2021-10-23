@@ -11,6 +11,7 @@ export default class View_Income extends Component {
           filter: "none",
           isLoaded: false,
           update: false,
+          Totalsum: 0,
           data:{
             DateOfIncome: '',
             Name: '',
@@ -27,23 +28,32 @@ export default class View_Income extends Component {
           .then((result)=> {
             if (this.state.filter === "none" || this.state.filter === "all")
             {
+                var sum = 0;
+                for (var i = 0 ; i < result.length ; i++)
+                {
+                    sum += result[i].Amount;
+                }
                 this.setState({
                     isLoaded: true,
-                    items: result
+                    items: result,
+                    Totalsum: sum
                 });
             }else{
                 var arr = [];
-                for (var i = 0 ; i < result.length ; i++)
+                var sum1 = 0;
+                for (var j = 0 ; j < result.length ; j++)
                 {
-                    if (result[i].Category === this.state.filter)
+                    if (result[j].Category === this.state.filter)
                     {
-                        arr.push(result[i]);
+                        sum1 += result[j].Amount;
+                        arr.push(result[j]);
                     }
                 }
                 this.setState({
                     isLoaded: true,
                     items: arr,
-                    filter: this.state.filter
+                    filter: this.state.filter,
+                    Totalsum: sum1
                 })
             }
             });
@@ -168,7 +178,8 @@ export default class View_Income extends Component {
                 </div>
             </div>
         <div className="my-5" id="income_records">
-            <div style={{backgroundColor: "#0d6efd" , fontSize: "20px" , color: "white" , padding: "0px 10px"}}>
+            <h4 className="text-center">{`Total Income for selected filtered category is: ${this.state.Totalsum}`}</h4>
+            <div style={{backgroundColor: "#0d6efd" , fontSize: "20px" , color: "white" , padding: "0px 10px",marginTop: "15px"}}>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-cash-stack" viewBox="0 0 16 16">
                 <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
                 <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2H3z"/>
@@ -218,7 +229,7 @@ export default class View_Income extends Component {
                         <div className="modal-dialog">
                             <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <h5 className="modal-title" id="exampleModalLabel">Income Update Form</h5>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">

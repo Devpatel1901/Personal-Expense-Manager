@@ -42,7 +42,7 @@ export default function Dashboard(props) {
                 <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
                </svg><br />
                <p className="fw-bold">{props.currency_symbol} {total_expense}</p>
-               <p className="fw-bold">Current Expense This Month</p>
+               <p className="fw-bold">Current Expense</p>
               </div>
           </div>
           <div className="col-6 col-md-4">
@@ -52,7 +52,7 @@ export default function Dashboard(props) {
                 <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2H3z"/>
               </svg><br />
                <p className="fw-bold">{props.currency_symbol} {total_income}</p>
-               <p className="fw-bold">Current Income This Month</p>
+               <p className="fw-bold">Current Income</p>
               </div>
           </div>
           <div className="col-6 col-md-4">
