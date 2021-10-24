@@ -178,7 +178,7 @@ export default class View_Income extends Component {
                 </div>
             </div>
         <div className="my-5" id="income_records">
-            <h4 className="text-center">{`Total Income for selected filtered category is: ${this.state.Totalsum}`}</h4>
+            <h4 className="text-center">{`Total Income for selected filtered category is: ${this.props.currency_symbol.slice(48,49)}. ${this.state.Totalsum}`}</h4>
             <div style={{backgroundColor: "#0d6efd" , fontSize: "20px" , color: "white" , padding: "0px 10px",marginTop: "15px"}}>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-cash-stack" viewBox="0 0 16 16">
                 <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>

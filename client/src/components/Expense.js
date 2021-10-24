@@ -107,7 +107,7 @@ export default class Expense extends Component {
         }
         else
         {
-            alert("Your Entered Item Cost is execeeded from your budget that you have set.Please Reset Your Budget before inserting a new Expense");
+            alert(`Your Entered Item Cost is execeeded from your budget that you have set.Please Reset Your Budget before inserting a new Expense for ${this.state.ItemCategory} Category`);
             return
         }
     }

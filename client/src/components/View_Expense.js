@@ -178,7 +178,7 @@ export default class View_Expense extends Component {
                 </div>
                 </div>
                 <div className="my-5" id="expense_records" style={{height: "37vh",position: "relative"}}>
-                    <h4 className="text-center">{`Total Expense for selected filtered category is: ${this.state.Totalsum}`}</h4>
+                    <h4 className="text-center">{`Total Expense for selected filtered category is: ${this.props.currency_symbol.slice(48,49)}. ${this.state.Totalsum}`}</h4>
                     <div style={{backgroundColor: "#ff4040" , fontSize: "20px" , color: "white" ,   padding: "0px 10px",marginTop: "15px"}}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" className="bi bi-arrows-angle-expand" viewBox="0 0 16 16">
                         <path fillRule="evenodd" d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707z"/>
