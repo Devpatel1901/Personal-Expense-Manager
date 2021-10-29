@@ -22,10 +22,19 @@ export default class LastExpense extends Component {
               })
               var arr = [];
               arr.push(result[result.length - 1]);
-              this.setState({
-                  items: arr,
-                  isLoaded: true
-              })
+              if (result.length < 0)
+              {
+                  this.setState({
+                      items: arr,
+                      isLoaded: false
+                  })
+              }
+              else{
+                this.setState({
+                    items: arr,
+                    isLoaded: true
+                })
+              }
             // console.log(this.state.items);
         });
     }

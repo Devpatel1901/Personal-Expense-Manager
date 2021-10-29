@@ -56,16 +56,17 @@ export default class Expense extends Component {
             {
                 console.log()
                 amount = data.BudgetAmount;
-                return amount;
+                // return amount;
             }
             return amount;
         })
         var AvailableBalance = budget - total_expense_category_wise;
-        if (AvailableBalance <= 0)
-        {
-            res = false;
-        }
-        else if (AvailableBalance > 0)
+        // if (AvailableBalance <= 0)
+        // {
+        //     res = false;
+        // }
+        // else
+        if (AvailableBalance > 0)
         {
             if (cost <= AvailableBalance)
             {
@@ -75,6 +76,9 @@ export default class Expense extends Component {
             {
                 res = false;
             }
+        }
+        else{
+            res = true;
         }
         return res;
     }
